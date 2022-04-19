@@ -21,9 +21,9 @@ const (
 )
 
 var selected Selected
-var numbEasyPicture = 5
-var numbMediumPicture = 5
-var numbHardPicture = 5
+var numbEasyPicture = 10
+var numbMediumPicture = 10
+var numbHardPicture = 10
 var numbMixedPicture = numbEasyPicture + numbMediumPicture + numbHardPicture
 var sequenceOfPictures []int
 var exercise int
@@ -45,7 +45,16 @@ func processingSimpleUtterance(r Request) (resp Response) {
 	switch r.Request.Command {
 	case "запусти навык рисунки по клеточкам", "включи навык рисунки по клеточкам", "открой навык рисунки по клеточкам", "хочу навык рисунки по клеточкам",
 		"запусти скилл рисунки по клеточкам", "включи скилл рисунки по клеточкам", "открой скилл рисунки по клеточкам", "хочу скилл рисунки по клеточкам",
-		"запусти skill рисунки по клеточкам", "включи skill рисунки по клеточкам", "открой skill рисунки по клеточкам", "хочу skill рисунки по клеточкам":
+		"запусти skill рисунки по клеточкам", "включи skill рисунки по клеточкам", "открой skill рисунки по клеточкам", "хочу skill рисунки по клеточкам",
+		"запусти навык рисунок по клеточкам", "включи навык рисунок по клеточкам", "открой навык рисунок по клеточкам", "хочу навык рисунок по клеточкам",
+		"запусти скилл рисунок по клеточкам", "включи скилл рисунок по клеточкам", "открой скилл рисунок по клеточкам", "хочу скилл рисунок по клеточкам",
+		"запусти skill рисунок по клеточкам", "включи skill рисунок по клеточкам", "открой skill рисунок по клеточкам", "хочу skill рисунок по клеточкам",
+		"запусти навык рисование по клеточкам", "включи навык рисование по клеточкам", "открой навык рисование по клеточкам", "хочу навык рисование по клеточкам",
+		"запусти скилл рисование по клеточкам", "включи скилл рисование по клеточкам", "открой скилл рисование по клеточкам", "хочу скилл рисование по клеточкам",
+		"запусти skill рисование по клеточкам", "включи skill рисование по клеточкам", "открой skill рисование по клеточкам", "хочу skill рисование по клеточкам",
+		"запусти навык рисования по клеточкам", "включи навык рисования по клеточкам", "открой навык рисования по клеточкам", "хочу навык рисования по клеточкам",
+		"запусти скилл рисования по клеточкам", "включи скилл рисования по клеточкам", "открой скилл рисования по клеточкам", "хочу скилл рисования по клеточкам",
+		"запусти skill рисования по клеточкам", "включи skill рисования по клеточкам", "открой skill рисования по клеточкам", "хочу skill рисования по клеточкам":
 		resp = processingOnStart(resp)
 	case "легкие", "легкий", "легкая":
 		resp = processingCommandEasy(resp)
@@ -65,7 +74,13 @@ func processingSimpleUtterance(r Request) (resp Response) {
 		resp = processingCommandNext(r, resp)
 	case "готово", "готова", "готов", "сделано", "сделана", "сделан", "завершено", "завершена", "завершен":
 		resp = processingCommandShowResult(r, resp)
-	case Black, Brown, Darkblue, Blue, Purple, Red, Pink, Orange, Yellow, Green, Beige, Gray, White:
+	case Black, Brown, Darkblue, Blue, Purple, Red,
+		LightPinkWithoutDash, LightPink, "светлый розовый", "светлый-розовый",
+		DarkPinkWithoutDash, DarkPink, "темный розовый", "темный-розовый",
+		Orange, Yellow, Green, Beige,
+		LightGrayWithoutDash, LightGray, "светлый серый", "светлый-серый",
+		DarkGrayWithoutDash, DarkGray, "темный серый", "темный-серый",
+		White:
 		resp = processingCommandColor(r, resp, r.Request.Command)
 	case OnInterrupt:
 		resp = processingCommandOnInterrupt(resp)
@@ -105,7 +120,7 @@ func processingButtonPressed(r Request) (resp Response) {
 		resp = processingCommandYes(resp)
 	case "нет":
 		resp = processingCommandNo(r, resp)
-	case Black, Brown, Darkblue, Blue, Purple, Red, Pink, Orange, Yellow, Green, Beige, Gray, White:
+	case Black, Brown, Darkblue, Blue, Purple, Red, LightPink, DarkPink, Orange, Yellow, Green, Beige, LightGray, DarkGray, White:
 		resp = processingCommandColor(r, resp, p.Text)
 	}
 	return
@@ -114,6 +129,9 @@ func processingButtonPressed(r Request) (resp Response) {
 func processingOnStart(resp Response) Response {
 	resp.Text = "Я подготовила для Вас рисунки трех видов сложности: легкие, средние и сложные. Также можно выбрать вариант «Вперемешку». Для легких рисунков необходимо подготовить клетчатую бумагу размером 15x15 клеток, для средних — 25x25 клеток, а для сложных — 30x30 клеток. Какой вид сложности Вы хотите выбрать?"
 	resp.TTS = "Я подготовила для Вас рисунки трех видов сложности:\n легкие - средние - и - сложные. Также можно выбрать вариант ^Вперемешку^. Для легких рисунков необходимо подготовить клетчатую бумагу размером пятнадцать на пятнадцать клеток, для средних - двадцать пять на двадцать пять клеток, а для сложных - тридцать на тридцать клеток.\nКакой вид сложности Вы хотите выбрать?"
+	resp.Card = NewBigImage(
+		457239151,
+	)
 	resp.AddButton("Легкие", Payload {
 		Text: "легкие",
 	})
@@ -393,36 +411,16 @@ func levelSelection(resp Response) Response {
 			resp = easyLevel4(resp)
 		case 5:
 			resp = easyLevel5(resp)
-			/*case 6:
-				resp = easyLevel6(resp)
-				resp = mainButtons(resp)
-			case 7:
-				resp = easyLevel7(resp)
-				resp = mainButtons(resp)
-			case 8:
-				resp = easyLevel8(resp)
-				resp = mainButtons(resp)
-			case 9:
-				resp = easyLevel9(resp)
-				resp = mainButtons(resp)
-			case 10:
-				resp = easyLevel10(resp)
-				resp = mainButtons(resp)
-			case 11:
-				resp = easyLevel11(resp)
-				resp = mainButtons(resp)
-			case 12:
-				resp = easyLevel12(resp)
-				resp = mainButtons(resp)
-			case 13:
-				resp = easyLevel13(resp)
-				resp = mainButtons(resp)
-			case 14:
-				resp = easyLevel14(resp)
-				resp = mainButtons(resp)
-			case 15:
-				resp = easyLevel15(resp)
-				resp = mainButtons(resp)*/
+		case 6:
+			resp = easyLevel6(resp)
+		case 7:
+			resp = easyLevel7(resp)
+		case 8:
+			resp = easyLevel8(resp)
+		case 9:
+			resp = easyLevel9(resp)
+		case 10:
+			resp = easyLevel10(resp)
 		}
 	case Medium:
 		switch sequenceOfPictures[exercise] {
@@ -436,6 +434,16 @@ func levelSelection(resp Response) Response {
 			resp = mediumLevel4(resp)
 		case 5:
 			resp = mediumLevel5(resp)
+		case 6:
+			resp = mediumLevel6(resp)
+		case 7:
+			resp = mediumLevel7(resp)
+		case 8:
+			resp = mediumLevel8(resp)
+		case 9:
+			resp = mediumLevel9(resp)
+		case 10:
+			resp = mediumLevel10(resp)
 		}
 	case Hard:
 		switch sequenceOfPictures[exercise] {
@@ -449,6 +457,16 @@ func levelSelection(resp Response) Response {
 			resp = hardLevel4(resp)
 		case 5:
 			resp = hardLevel5(resp)
+		case 6:
+			resp = hardLevel6(resp)
+		case 7:
+			resp = hardLevel7(resp)
+		case 8:
+			resp = hardLevel8(resp)
+		case 9:
+			resp = hardLevel9(resp)
+		case 10:
+			resp = hardLevel10(resp)
 		}
 	case Mixed:
 		switch sequenceOfPictures[exercise] {
@@ -463,25 +481,55 @@ func levelSelection(resp Response) Response {
 		case 5:
 			resp = easyLevel5(resp)
 		case 6:
-			resp = mediumLevel1(resp)
+			resp = easyLevel6(resp)
 		case 7:
-			resp = mediumLevel2(resp)
+			resp = easyLevel7(resp)
 		case 8:
-			resp = mediumLevel3(resp)
+			resp = easyLevel8(resp)
 		case 9:
-			resp = mediumLevel4(resp)
+			resp = easyLevel9(resp)
 		case 10:
-			resp = mediumLevel5(resp)
+			resp = easyLevel10(resp)
 		case 11:
-			resp = hardLevel1(resp)
+			resp = mediumLevel1(resp)
 		case 12:
-			resp = hardLevel2(resp)
+			resp = mediumLevel2(resp)
 		case 13:
-			resp = hardLevel3(resp)
+			resp = mediumLevel3(resp)
 		case 14:
-			resp = hardLevel4(resp)
+			resp = mediumLevel4(resp)
 		case 15:
+			resp = mediumLevel5(resp)
+		case 16:
+			resp = mediumLevel6(resp)
+		case 17:
+			resp = mediumLevel7(resp)
+		case 18:
+			resp = mediumLevel8(resp)
+		case 19:
+			resp = mediumLevel9(resp)
+		case 20:
+			resp = mediumLevel10(resp)
+		case 21:
+			resp = hardLevel1(resp)
+		case 22:
+			resp = hardLevel2(resp)
+		case 23:
+			resp = hardLevel3(resp)
+		case 24:
+			resp = hardLevel4(resp)
+		case 25:
 			resp = hardLevel5(resp)
+		case 26:
+			resp = hardLevel6(resp)
+		case 27:
+			resp = hardLevel7(resp)
+		case 28:
+			resp = hardLevel8(resp)
+		case 29:
+			resp = hardLevel9(resp)
+		case 30:
+			resp = hardLevel10(resp)
 		}
 	}
 	resp = mainButtons(resp)
@@ -501,7 +549,7 @@ func processingCommandColor(r Request, resp Response, command string) Response {
 		pictureSelected = false
 		pictureSample = false
 		showBtnYesAndNo = false
-		resp = drawingLevel(resp, color)
+		resp = drawingLevel(resp)
 	} else if pictureDraw {
 		resp = processingCommandOnDefault(r, resp)
 	} else {
@@ -513,7 +561,7 @@ func processingCommandColor(r Request, resp Response, command string) Response {
 //Переход к рисованию следующих клеток с тем же цветом
 func processingCommandNext(r Request, resp Response) Response {
 	if selected != None && color != "" && !pictureDraw {
-		resp = drawingLevel(resp, color)
+		resp = drawingLevel(resp)
 		colorSelected = true
 		pictureSelected = false
 		pictureSample = false
@@ -546,7 +594,6 @@ func processingCommandShowResult(r Request, resp Response) Response {
 	} else {
 		resp = processingCommandOnDefault(r, resp)
 	}
-
 	return resp
 }
 

@@ -26,10 +26,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7b839ad-83ea-40de-b5d9-1e3903723d96" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/easylevels.go" beforeDir="false" afterPath="$PROJECT_DIR$/easylevels.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interaction.go" beforeDir="false" afterPath="$PROJECT_DIR$/interaction.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skillhandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/skillhandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easylevels.go" beforeDir="false" afterPath="$PROJECT_DIR$/levels.go" afterDir="false" />
     </list>
     <list id="6dead307-7d56-4421-992d-3b455acc596d" name="Исправление: Раздел 3 - тест 18" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,7 +42,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../Program Files/Go" />
+  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../../Program Files/Go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -73,6 +71,7 @@
     <property name="configurable..is.expanded" value="false" />
     <property name="configurable.GoLibrariesConfigurable.is.expanded" value="true" />
     <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
